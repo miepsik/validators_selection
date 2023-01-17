@@ -1,0 +1,6 @@
+stash_address,Commission (in %),Self Stake (in DOT),Total Stake (in DOT),Era Points,Cluster Size,Voters
+a,10,201480,4299445.4,780,1,279
+b,1,402960,4299445.4,1220,3,1042
+c,10,402960,4299445.4,1073,5,279
+d,1,1,3513760,926,9,1805
+e,10,201480,3513760,926,13,2569
