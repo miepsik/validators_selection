@@ -1,3 +1,4 @@
+
 # Validators selection
 
 Implementation of UTA approach for validators selection based on nominator's preferences.
@@ -103,4 +104,6 @@ stash_address,score
 1hYyu9C3dupTiKGMNcrCRK6HVPS7LYznuofDXsia3N1W6AK,0.5370507641523767
 ```
 
-
+# Tests
+To run unit tests execute ```python -m unittest discover``` in the main directory, not in the /test.
+When docker is running additional test can be executed from the test directory ```python integration_test.py```
