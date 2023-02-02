@@ -1,4 +1,5 @@
 
+
 # Validators selection
 
 Implementation of UTA approach for validators selection based on nominator's preferences.
@@ -53,6 +54,19 @@ Output:
  - 400, "col not present in the model" if model structure is not correct
  - 200, coma separated string with two columns: validator, score
 
+# Tests
+
+## Environment
+ - python 3.8 installed
+ - pip3 install -r requirements.txt
+ - pip3 install requests (to run integration test) 
+## Execution
+To run unit tests execute ```python -m unittest discover``` in the main directory, not in the /test.
+When docker is running:
+ - docker build -t "validators_selection:Dockerfile" .
+ - docker run -p 14237:14237 validators_selection:Dockerfile
+
+ additional test can be executed from the test directory ```python integration_test.py```
 # Example
 Call:
 ```
@@ -104,6 +118,3 @@ stash_address,score
 1hYyu9C3dupTiKGMNcrCRK6HVPS7LYznuofDXsia3N1W6AK,0.5370507641523767
 ```
 
-# Tests
-To run unit tests execute ```python -m unittest discover``` in the main directory, not in the /test.
-When docker is running additional test can be executed from the test directory ```python integration_test.py```
