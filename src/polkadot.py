@@ -131,8 +131,8 @@ def next():
         exported = []
     else:
     	quality = model.getPrecision();exported = exportModel(model, df.columns)
-    return {"validatorA": {'values': prepare(a, df.columns), 'history': [[a.tolist(), b.tolist()]] + history}, 
-            "validatorB": {'values': prepare(b, df.columns), 'history': [[b.tolist(), a.tolist()]] + history}, "quality": quality, "model": exported}
+    return {"validatorA": {'values': prepare(a, df.columns), 'history': history + [[a.tolist(), b.tolist()]]}, 
+            "validatorB": {'values': prepare(b, df.columns), 'history': history + [[b.tolist(), a.tolist()]]}, "quality": quality, "model": exported}
             
 @app.route("/rankingPolkadot", methods=['POST'])
 def ranking():

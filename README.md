@@ -14,6 +14,7 @@ Accepts new file with validators description, should be called at the start of e
 
 Endpoint: \fileuploadPolkadot
 Method: POST
+Time: ~15 minutes for depth=6
 Parameters:
  - validators - a csv file containing validators that might be recommended to a nominator
  - depth - an integer denoting number of questions to compute in advance (default 7)
@@ -28,6 +29,7 @@ Search for an optimal question to maximize model's information gain and therefor
 
 Endpoint: \nextPolkadot
 Method: POST
+Time: ~200ms per pair
 Parameters:
  - history - collection containing previous answers
 
@@ -46,6 +48,7 @@ Provides a ranking of validators for a provided model and a previously provided 
 
 Endopint: \rankingPolkadot
 Method: POST
+Time: ~150ms
 Parameters:
  - model - model from "\next" function for which the ranking should be calculated 
 
@@ -70,7 +73,7 @@ When docker is running:
 # Example
 Call:
 ```
-curl -X POST -F 'validators=@validators.csv' -F 'depth=2' localhost:14237/fileupload
+curl -X POST -F 'validators=@validators.csv' -F 'depth=2' localhost:14237/fileuploadPolkadot
 ```
 Response:
 ```
@@ -79,7 +82,7 @@ DONE
 
 Call:
 ```
-curl -X POST http://localhost:14237/next -H 'Content-Type: application/json' -d '{"history": []}'
+curl -X POST http://localhost:14237/nextPolkadot -H 'Content-Type: application/json' -d '{"history": []}'
 ```
 Response:
 ```json
@@ -88,7 +91,7 @@ Response:
 
 Call:
 ```
-curl -X POST http://localhost:14237/next -H 'Content-Type: application/json' -d '{"history": [[[2.0,3.0,2166958.6,780.0,8.0,998.0],[10.0,1.0,2162675.0,880.0,1.0,451.0]]]}'
+curl -X POST http://localhost:14237/nextPolkadot -H 'Content-Type: application/json' -d '{"history": [[[2.0,3.0,2166958.6,780.0,8.0,998.0],[10.0,1.0,2162675.0,880.0,1.0,451.0]]]}'
 ```
 Response:
 ```json
@@ -97,7 +100,7 @@ Response:
 
 Call:
 ```
-curl -X POST http://localhost:14237/ranking -H 'Content-Type: application/json' -d '{"model":{"clusterSize": [[1.0, 5.0, 9.0, 13.0], [0.0, 0.04, 0.07, 0.06]], "commission": [[0.5, 1.0, 4.0, 7.0, 10.0], [0.25, 0.18, 0.12, 0.06, 0.0]], "eraPoints": [[780, 926, 1073, 1220], [0.0, 0.05, 0.12, 0.2]], "selfStake": [[1.0, 201480, 402960, 604440.2], [0.0, 0.08, 0.15, 0.22]], "totalStake": [[1942391.7, 2728076, 3513760, 4299445.4], [0.22, 0.14, 0.07, 0.0]], "voters": [[279.0, 1042, 1805, 2569.0], [0.0, 0.02, 0.01, 0.02]]}}'
+curl -X POST http://localhost:14237/rankingPolkadot -H 'Content-Type: application/json' -d '{"model":{"clusterSize": [[1.0, 5.0, 9.0, 13.0], [0.0, 0.04, 0.07, 0.06]], "commission": [[0.5, 1.0, 4.0, 7.0, 10.0], [0.25, 0.18, 0.12, 0.06, 0.0]], "eraPoints": [[780, 926, 1073, 1220], [0.0, 0.05, 0.12, 0.2]], "selfStake": [[1.0, 201480, 402960, 604440.2], [0.0, 0.08, 0.15, 0.22]], "totalStake": [[1942391.7, 2728076, 3513760, 4299445.4], [0.22, 0.14, 0.07, 0.0]], "voters": [[279.0, 1042, 1805, 2569.0], [0.0, 0.02, 0.01, 0.02]]}}'
 ```
 Response:
 ```json
