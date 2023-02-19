@@ -16,6 +16,7 @@ from sklearn.neighbors import KDTree
 from skopt import gp_minimize
 
 import os
+from waitress import serve
 
 from UTA import UTA
 from Cache import Cache
@@ -26,9 +27,9 @@ def precompute(selector, depth, cache):
     options = np.zeros(depth)
     # for each possible path find next question
     for i in range(2 ** depth):
-        model = UTA(df, negative=["Commission (in %)", "Total Stake (in DOT)"],
-                    not_monotonic=["Voters", "Cluster Size"], n_probes=250, goal_function='average',
-                    n_points=4, additional_points={"Commission (in %)": {-0.5: "left none"}})
+        model = UTA(df, negative=["commission", "totalStake"],
+                    not_monotonic=["voters", "clusterSize"], n_probes=250, goal_function='average',
+                    n_points=4, additional_points={"commission": {-0.5: "left none"}})
         for k in range(depth):
             if k < 1:
                 history = []
@@ -82,7 +83,7 @@ def prepare(values, columns):
     return output
         
         
-@app.route("/fileupload", methods=['POST'])
+@app.route("/fileuploadPolkadot", methods=['POST'])
 def newFile():
 	global df
 	global cache
@@ -92,7 +93,6 @@ def newFile():
 	df = pd.read_csv(request.files.get('validators'))
 	if len(df.columns) != 7:
 		return "Invalid file structure, expected 7 columns, got " + str(len(df.columns)), 400
-	df.columns = ["stash_address", "Commission (in %)", "Self Stake (in DOT)", "Total Stake (in DOT)", "Era Points", "Cluster Size", "Voters"]
 	df = df.set_index("stash_address")
 	depth = 7
 	data = request.form
@@ -104,7 +104,7 @@ def newFile():
 	return "Done"
 
 
-@app.route("/next", methods=['POST'])
+@app.route("/nextPolkadot", methods=['POST'])
 def next():
     global cache
     data = request.json
@@ -115,9 +115,9 @@ def next():
     
     if len(history) < 1: history = []
     # model creating
-    model = UTA(df, negative=["Commission (in %)", "Total Stake (in DOT)"],
-                    not_monotonic=["Voters", "Cluster Size"], n_probes=250, goal_function='average',
-                    n_points=4, additional_points={"Commission (in %)": {-0.5: "left none"}})
+    model = UTA(df, negative=["commission", "totalStake"],
+                    not_monotonic=["voters", "clusterSize"], n_probes=250, goal_function='average',
+                    n_points=4, additional_points={"commission": {-0.5: "left none"}})
     # building a model based on a history
     for (a, b) in history:
         model.addBetter(a, b)
@@ -134,7 +134,7 @@ def next():
     return {"validatorA": {'values': prepare(a, df.columns), 'history': [[a.tolist(), b.tolist()]] + history}, 
             "validatorB": {'values': prepare(b, df.columns), 'history': [[b.tolist(), a.tolist()]] + history}, "quality": quality, "model": exported}
             
-@app.route("/ranking", methods=['POST'])
+@app.route("/rankingPolkadot", methods=['POST'])
 def ranking():
     global df
     data = request.json
@@ -147,7 +147,7 @@ def ranking():
         if col not in model:
             return col + " not present in the model", 400
         output.score += np.interp(df[col], model[col][0], model[col][1])
-    return output[['score']].to_csv()
+    return output[['score']].to_json()
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=14237)
+    serve(app, host="0.0.0.0", port=14237)

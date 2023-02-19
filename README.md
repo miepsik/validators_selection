@@ -12,7 +12,7 @@ Specification of exposed endpoints
 ## New file
 Accepts new file with validators description, should be called at the start of each era.
 
-Endpoint: \fileupload
+Endpoint: \fileuploadPolkadot
 Method: POST
 Parameters:
  - validators - a csv file containing validators that might be recommended to a nominator
@@ -26,7 +26,7 @@ Output:
 ## Next pair
 Search for an optimal question to maximize model's information gain and therefore provide recommendations matching nominator's preferences better.
 
-Endpoint: \next
+Endpoint: \nextPolkadot
 Method: POST
 Parameters:
  - history - collection containing previous answers
@@ -44,7 +44,7 @@ Output:
 ## Ranking
 Provides a ranking of validators for a provided model and a previously provided file with validators
 
-Endopint: \ranking
+Endopint: \rankingPolkadot
 Method: POST
 Parameters:
  - model - model from "\next" function for which the ranking should be calculated 
@@ -83,38 +83,41 @@ curl -X POST http://localhost:14237/next -H 'Content-Type: application/json' -d 
 ```
 Response:
 ```json
-{"model":[],"quality":-1,"validatorA":{"history":[[[2.0,3.0,2166958.6,780.0,8.0,998.0],[3.0,5349.8,2160212.4,960.0,1.0,385.0]]],"values":{"Cluster Size":8.0,"Commission (in %)":2.0,"Era Points":780.0,"Self Stake (in DOT)":3.0,"Total Stake (in DOT)":2166958.6,"Voters":998.0}},"validatorB":{"history":[[[3.0,5349.8,2160212.4,960.0,1.0,385.0],[2.0,3.0,2166958.6,780.0,8.0,998.0]]],"values":{"Cluster Size":1.0,"Commission (in %)":3.0,"Era Points":960.0,"Self Stake (in DOT)":5349.8,"Total Stake (in DOT)":2160212.4,"Voters":385.0}}}
+{"model":[],"quality":-1,"validatorA":{"history":[[[10.0,1.0,2162675.0,880.0,1.0,451.0],[2.0,3.0,2166958.6,780.0,8.0,998.0]]],"values":{"clusterSize":1.0,"commission":10.0,"eraPoints":880.0,"selfStake":1.0,"totalStake":2162675.0,"voters":451.0}},"validatorB":{"history":[[[2.0,3.0,2166958.6,780.0,8.0,998.0],[10.0,1.0,2162675.0,880.0,1.0,451.0]]],"values":{"clusterSize":8.0,"commission":2.0,"eraPoints":780.0,"selfStake":3.0,"totalStake":2166958.6,"voters":998.0}}}
 ```
 
 Call:
 ```
-curl -X POST http://localhost:14237/next -H 'Content-Type: application/json' -d '{"history": [[[2.0,3.0,2166958.6,780.0,8.0,998.0],[3.0,5349.8,2160212.4,960.0,1.0,385.0]]]}'
+curl -X POST http://localhost:14237/next -H 'Content-Type: application/json' -d '{"history": [[[2.0,3.0,2166958.6,780.0,8.0,998.0],[10.0,1.0,2162675.0,880.0,1.0,451.0]]]}'
 ```
 Response:
 ```json
-{"model":{"Cluster Size":[[1.0,5.0,9.0,13.0],[0.0,0.05110380798578262,0.08571542054414749,0.07616810500621796]],"Commission (in %)":[[0.5,1.0,4.0,7.0,10.0],[0.24016796052455902,0.17940208315849304,0.11632449924945831,0.06259024143218994,0.0]],"Era Points":[[780.0,926.6666666666666,1073.3333333333333,1220.0],[0.0,0.046321600675582886,0.1112983375787735,0.1862511932849884]],"Self Stake (in DOT)":[[1.0,201480.7333333333,402960.4666666666,604440.2],[0.0,0.07729128003120422,0.14550165832042694,0.2152264565229416]],"Total Stake (in DOT)":[[1942391.7,2728076.2666666666,3513760.8333333335,4299445.4],[0.21496045589447021,0.13687363266944885,0.07219888269901276,0.0]],"Voters":[[279.0,1042.3333333333335,1805.6666666666667,2569.0],[0.0,0.057678502053022385,0.047051720321178436,0.043068237602710724]]},"quality":-0.06813186813186813,"validatorA":{"history":[[[1.0,10883.1,2168765.7,880.0,2.0,850.0],[1.0,570807.4,3405665.4,820.0,3.0,2569.0]],[[2.0,3.0,2166958.6,780.0,8.0,998.0],[3.0,5349.8,2160212.4,960.0,1.0,385.0]]],"values":{"Cluster Size":2.0,"Commission (in %)":1.0,"Era Points":880.0,"Self Stake (in DOT)":10883.1,"Total Stake (in DOT)":2168765.7,"Voters":850.0}},"validatorB":{"history":[[[1.0,570807.4,3405665.4,820.0,3.0,2569.0],[1.0,10883.1,2168765.7,880.0,2.0,850.0]],[[2.0,3.0,2166958.6,780.0,8.0,998.0],[3.0,5349.8,2160212.4,960.0,1.0,385.0]]],"values":{"Cluster Size":3.0,"Commission (in %)":1.0,"Era Points":820.0,"Self Stake (in DOT)":570807.4,"Total Stake (in DOT)":3405665.4,"Voters":2569.0}}}
+{"model":{"clusterSize":[[1.0,5.0,9.0,13.0],[0.0,0.0045360601507127285,0.016621457412838936,0.01422062423080206]],"commission":[[0.5,1.0,4.0,7.0,10.0],[0.2627783715724945,0.20055368542671204,0.13935373723506927,0.07155085355043411,0.0]],"eraPoints":[[780.0,926.6666666666666,1073.3333333333333,1220.0],[0.0,0.07101559638977051,0.14314094185829163,0.2209450751543045]],"selfStake":[[1.0,201480.7333333333,402960.4666666666,604440.2],[0.0,0.08295433223247528,0.16195763647556305,0.23893168568611145]],"totalStake":[[1942391.7,2728076.2666666666,3513760.8333333335,4299445.4],[0.23925749957561493,0.15444865822792053,0.08066676557064056,0.0]],"voters":[[279.0,1042.3333333333335,1805.6666666666667,2569.0],[0.0,0.021465888246893883,0.011682764627039433,0.015950998291373253]]},"quality":-0.3494505494505495,"validatorA":{"history":[[[1.5,3801.3,2167745.0,860.0,1.0,1166.0],[10.0,604440.2,4299445.4,860.0,1.0,458.0]],[[2.0,3.0,2166958.6,780.0,8.0,998.0],[10.0,1.0,2162675.0,880.0,1.0,451.0]]],"values":{"clusterSize":1.0,"commission":1.5,"eraPoints":860.0,"selfStake":3801.3,"totalStake":2167745.0,"voters":1166.0}},"validatorB":{"history":[[[10.0,604440.2,4299445.4,860.0,1.0,458.0],[1.5,3801.3,2167745.0,860.0,1.0,1166.0]],[[2.0,3.0,2166958.6,780.0,8.0,998.0],[10.0,1.0,2162675.0,880.0,1.0,451.0]]],"values":{"clusterSize":1.0,"commission":10.0,"eraPoints":860.0,"selfStake":604440.2,"totalStake":4299445.4,"voters":458.0}}}
 ```
 
 Call:
 ```
-curl -X POST http://localhost:14237/ranking -H 'Content-Type: application/json' -d '{"model":{"Cluster Size":[[1.0,5.0,9.0,13.0],[0.0,0.05110380798578262,0.08571542054414749,0.07616810500621796]],"Commission (in %)":[[0.5,1.0,4.0,7.0,10.0],[0.24016796052455902,0.17940208315849304,0.11632449924945831,0.06259024143218994,0.0]],"Era Points":[[780.0,926.6666666666666,1073.3333333333333,1220.0],[0.0,0.046321600675582886,0.1112983375787735,0.1862511932849884]],"Self Stake (in DOT)":[[1.0,201480.7333333333,402960.4666666666,604440.2],[0.0,0.07729128003120422,0.14550165832042694,0.2152264565229416]],"Total Stake (in DOT)":[[1942391.7,2728076.2666666666,3513760.8333333335,4299445.4],[0.21496045589447021,0.13687363266944885,0.07219888269901276,0.0]],"Voters":[[279.0,1042.3333333333335,1805.6666666666667,2569.0],[0.0,0.057678502053022385,0.047051720321178436,0.043068237602710724]]}}'
+curl -X POST http://localhost:14237/ranking -H 'Content-Type: application/json' -d '{"model":{"clusterSize": [[1.0, 5.0, 9.0, 13.0], [0.0, 0.04, 0.07, 0.06]], "commission": [[0.5, 1.0, 4.0, 7.0, 10.0], [0.25, 0.18, 0.12, 0.06, 0.0]], "eraPoints": [[780, 926, 1073, 1220], [0.0, 0.05, 0.12, 0.2]], "selfStake": [[1.0, 201480, 402960, 604440.2], [0.0, 0.08, 0.15, 0.22]], "totalStake": [[1942391.7, 2728076, 3513760, 4299445.4], [0.22, 0.14, 0.07, 0.0]], "voters": [[279.0, 1042, 1805, 2569.0], [0.0, 0.02, 0.01, 0.02]]}}'
 ```
 Response:
-```
-stash_address,score
-11BgR7fH8Sq6CcGcXxZrhyrBM2PUpDmhnGZpxPGvVGXEiPT,0.23764662487783952
-11MJU5Q1rQh5BKuuECePhSAutv3WEVx6f2x9eZk9HXkCC1e,0.4846110339586901
-11uMPbeaEDJhUxzU4ZfWW9VQEsryP9XqFcNRfPdYda6aFWJ,0.4850486249474511
-14Vh8S1DzzycngbAB9vqEgPFR9JpSvmF1ezihTUES1EaHAV,0.46354287583757453
-1A2ATy1FEu5yQ9ZzghPLsRckPQ7XLmq5MJQYcTvGnxGvCho,0.31873883660579544
-1ChRPtPxrTfFTSWyKHtF6ASvaSjL5jqz6f68ih15zcjyM1V,0.4018127143292364
-1LMtHkfrADk7awSEFC45nyDKWxPu9cK796vtrf7Fu3NZQmB,0.5065323958400496
-1REAJ1k691g5Eqqg9gL7vvZCBG7FCCZ8zgQkZWd4va5ESih,0.5453396709136729
-1RG5T6zGY4XovW75mTgpH6Bx7Y6uwwMmPToMCJSdMwdm4EW,0.3679712404353946
-1RJP5i7zuyBLtgGTMCD9oF8zQMTQvfc4zpKNsVxfvTKdHmr,0.4824095496689415
-1StVBqjDJKogQTsLioHC44iFch1cEAv2jcpsnvsy5buBtUE,0.4065652143054436
-1WG3jyNqniQMRZGQUc7QD2kVLT8hkRPGMSqAb5XYQM1UDxN,0.2540182669600084
-1dGsgLgFez7gt5WjX2FYzNCJtaCjGG6W9dA42d9cHngDYGg,0.4441334847501082
-1hYyu9C3dupTiKGMNcrCRK6HVPS7LYznuofDXsia3N1W6AK,0.5370507641523767
+```json
+{
+   "score":{
+      "11BgR7fH8Sq6CcGcXxZrhyrBM2PUpDmhnGZpxPGvVGXEiPT":0.2363253933,
+      "11MJU5Q1rQh5BKuuECePhSAutv3WEVx6f2x9eZk9HXkCC1e":0.4779707505,
+      "11uMPbeaEDJhUxzU4ZfWW9VQEsryP9XqFcNRfPdYda6aFWJ":0.4407020016,
+      "14Vh8S1DzzycngbAB9vqEgPFR9JpSvmF1ezihTUES1EaHAV":0.4404848282,
+      "1A2ATy1FEu5yQ9ZzghPLsRckPQ7XLmq5MJQYcTvGnxGvCho":0.3200742682,
+      "1ChRPtPxrTfFTSWyKHtF6ASvaSjL5jqz6f68ih15zcjyM1V":0.4089138424,
+      "1LMtHkfrADk7awSEFC45nyDKWxPu9cK796vtrf7Fu3NZQmB":0.4701029547,
+      "1REAJ1k691g5Eqqg9gL7vvZCBG7FCCZ8zgQkZWd4va5ESih":0.5216442482,
+      "1RG5T6zGY4XovW75mTgpH6Bx7Y6uwwMmPToMCJSdMwdm4EW":0.3568800114,
+      "1RJP5i7zuyBLtgGTMCD9oF8zQMTQvfc4zpKNsVxfvTKdHmr":0.438481586,
+      "1StVBqjDJKogQTsLioHC44iFch1cEAv2jcpsnvsy5buBtUE":0.4104116691,
+      "1WG3jyNqniQMRZGQUc7QD2kVLT8hkRPGMSqAb5XYQM1UDxN":0.2520892655,
+      "1dGsgLgFez7gt5WjX2FYzNCJtaCjGG6W9dA42d9cHngDYGg":0.4143351187,
+      "1hYyu9C3dupTiKGMNcrCRK6HVPS7LYznuofDXsia3N1W6AK":0.5446222004
+   }
+}
 ```
 

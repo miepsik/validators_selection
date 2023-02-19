@@ -1,4 +1,4 @@
-stash_address,Commission (in %),Self Stake (in DOT),Total Stake (in DOT),Era Points,Cluster Size,Voters
+stash_address,commission,selfStake,totalStake,eraPoints,clusterSize,voters
 11BgR7fH8Sq6CcGcXxZrhyrBM2PUpDmhnGZpxPGvVGXEiPT,10.0,1.0,2162675.0,880,1,451
 11MJU5Q1rQh5BKuuECePhSAutv3WEVx6f2x9eZk9HXkCC1e,5.0,1.0,2123849.3,1080,6,475
 11uMPbeaEDJhUxzU4ZfWW9VQEsryP9XqFcNRfPdYda6aFWJ,3.0,22.0,2167836.3,860,13,1328
