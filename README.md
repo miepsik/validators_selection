@@ -60,11 +60,14 @@ Output:
 # Tests
 
 ## Environment
- - python 3.8 installed
+ ### python 3.8 installed
  - pip3 install -r requirements.txt
  - pip3 install requests (to run integration test) 
+ ### python 3.9 installed
+ - pip3 install -r requirementsLocal.txt
 ## Execution
 To run unit tests execute ```python -m unittest discover``` in the main directory, not in the /test.
+
 When docker is running:
  - docker build -t "validators_selection:Dockerfile" .
  - docker run -p 14237:14237 validators_selection:Dockerfile
