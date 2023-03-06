@@ -12,9 +12,9 @@ Specification of exposed endpoints
 ## New file
 Accepts new file with validators description, should be called at the start of each era.
 
-Endpoint: \fileuploadPolkadot
-Method: POST
-Time: ~15 minutes for depth=6
+Endpoint: \fileuploadPolkadot\
+Method: POST\
+Time: ~15 minutes for depth=6\
 Parameters:
  - validators - a csv file containing validators that might be recommended to a nominator
  - depth - an integer denoting number of questions to compute in advance (default 7)
@@ -27,9 +27,9 @@ Output:
 ## Next pair
 Search for an optimal question to maximize model's information gain and therefore provide recommendations matching nominator's preferences better.
 
-Endpoint: \nextPolkadot
-Method: POST
-Time: ~200ms per pair
+Endpoint: \nextPolkadot\
+Method: POST\
+Time: ~200ms per pair\
 Parameters:
  - history - collection containing previous answers
 
@@ -46,9 +46,9 @@ Output:
 ## Ranking
 Provides a ranking of validators for a provided model and a previously provided file with validators
 
-Endopint: \rankingPolkadot
-Method: POST
-Time: ~150ms
+Endopint: \rankingPolkadot\
+Method: POST\
+Time: ~150ms\
 Parameters:
  - model - model from "\next" function for which the ranking should be calculated 
 
